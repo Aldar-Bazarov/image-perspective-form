@@ -5,7 +5,6 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
-using Pen = System.Drawing.Pen;
 
 namespace imageWpf
 {
