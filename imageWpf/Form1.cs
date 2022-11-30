@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
@@ -33,8 +35,21 @@ namespace imageWpf
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            fileName = @"C:\Users\Bazarov\Desktop\images\Безымянный_compress.jpg";
+            fileName = @"C:\Users\Bazarov\Desktop\images\HIMq1Bt47rQ.jpg";
+
             bmp = new Bitmap(fileName);
+
+
+            //List<IntPoint> corners = new List<IntPoint>();
+
+            //corners.Add(new IntPoint(x1, y1));
+            //corners.Add(new IntPoint(x2, y2));
+            //corners.Add(new IntPoint(x3, y3));
+            //corners.Add(new IntPoint(x4, y4));
+
+            //QuadrilateralTransformation filter = new QuadrilateralTransformationBilinear(corners, NewWidth, NewHeight);
+            //Bitmap newImage = filter.Apply(image);
+
 
             DrawPictureBoxes();
             DrawButtons();
@@ -187,14 +202,15 @@ namespace imageWpf
             }
         }
 
-        /// <summary>
-        /// Методы обработки событий мыши
-        /// </summary>
         private void closeButton_MouseClick(object sender, MouseEventArgs e)
         {
             this.Dispose();
             this.Close();
         }
+
+        /// <summary>
+        /// Методы обработки событий мыши
+        /// </summary>
 
         private void corner_MouseDown(object sender, MouseEventArgs e)
         {
@@ -235,10 +251,24 @@ namespace imageWpf
         /// </summary>
         private void UpdateImage()
         {
-            var t1 = new Float2(topLeftButton.Location.X - sourcePictureBox.Location.X, topLeftButton.Location.Y - sourcePictureBox.Location.Y);
-            var t2 = new Float2(topRightButton.Location.X - sourcePictureBox.Location.X, topRightButton.Location.Y - sourcePictureBox.Location.Y);
-            var t3 = new Float2(bottomLeftButton.Location.X - sourcePictureBox.Location.X, bottomLeftButton.Location.Y - sourcePictureBox.Location.Y);
-            var t4 = new Float2(bottomRightButton.Location.X - sourcePictureBox.Location.X, bottomRightButton.Location.Y - sourcePictureBox.Location.Y);
+            var t1 = new Float2(-(topLeftButton.Location.X - sourcePictureBox.Location.X + topLeftButton.Width),
+                                -(topLeftButton.Location.Y - sourcePictureBox.Location.Y + topLeftButton.Width));
+
+            var cursorPosition = new Float2((topRightButton.Location.X - sourcePictureBox.Location.X),
+                                (topRightButton.Location.Y - sourcePictureBox.Location.Y + topRightButton.Width));
+            var diff = new Float2(sourcePictureBox.Width - cursorPosition.X, cursorPosition.Y);
+            var t2 = new Float2(sourcePictureBox.Width + diff.X, -diff.Y);
+
+            cursorPosition = new Float2((bottomLeftButton.Location.X - sourcePictureBox.Location.X + bottomLeftButton.Width),
+                                (bottomLeftButton.Location.Y - sourcePictureBox.Location.Y));
+            diff = new Float2(cursorPosition.X, sourcePictureBox.Height - cursorPosition.Y);
+            var t3 = new Float2(-diff.X, sourcePictureBox.Height + diff.Y);
+
+            cursorPosition = new Float2((bottomRightButton.Location.X - sourcePictureBox.Location.X),
+                                (bottomRightButton.Location.Y - sourcePictureBox.Location.Y));
+            diff = new Float2(cursorPosition.X - sourcePictureBox.Width, cursorPosition.Y - sourcePictureBox.Height);
+            var t4 = new Float2((cursorPosition.X - diff.X * 2),
+                                (cursorPosition.Y - diff.Y * 2));
 
             var transform = Float3x3.Perspective(0, 0, _sourceImage.Width, _sourceImage.Height, t1, t2, t3, t4);
 
