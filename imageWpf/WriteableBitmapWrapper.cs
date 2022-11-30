@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -13,6 +15,18 @@ namespace imageWpf
         public WriteableBitmapWrapper(int w, int h)
         {
             Bitmap = new WriteableBitmap(w, h, 96, 96, PixelFormats.Bgra32, null);
+            Height = Bitmap.PixelHeight;
+            Width = Bitmap.PixelWidth;
+        }
+
+        public WriteableBitmapWrapper(Image img)
+        {
+            var bmp = (Bitmap)img;
+
+            BitmapSource b = Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(),
+                IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+            Bitmap = new WriteableBitmap(b);
             Height = Bitmap.PixelHeight;
             Width = Bitmap.PixelWidth;
         }
