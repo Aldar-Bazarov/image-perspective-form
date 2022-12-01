@@ -38,13 +38,14 @@ namespace imageWpf
             this.bottomLeftButton = new System.Windows.Forms.Button();
             this.topRightButton = new System.Windows.Forms.Button();
             this.topLeftButton = new System.Windows.Forms.Button();
+            this.transformButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.transformedPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sourcePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // transformedPictureBox
             // 
-            this.transformedPictureBox.Location = new System.Drawing.Point(545, 44);
+            this.transformedPictureBox.Location = new System.Drawing.Point(545, 67);
             this.transformedPictureBox.Name = "transformedPictureBox";
             this.transformedPictureBox.Size = new System.Drawing.Size(80, 143);
             this.transformedPictureBox.TabIndex = 16;
@@ -91,7 +92,7 @@ namespace imageWpf
             // bottomRightButton
             // 
             this.bottomRightButton.BackColor = System.Drawing.Color.Black;
-            this.bottomRightButton.Location = new System.Drawing.Point(500, 500);
+            this.bottomRightButton.Location = new System.Drawing.Point(498, 498);
             this.bottomRightButton.Name = "bottomRightButton";
             this.bottomRightButton.Size = new System.Drawing.Size(15, 15);
             this.bottomRightButton.TabIndex = 13;
@@ -104,7 +105,7 @@ namespace imageWpf
             // bottomLeftButton
             // 
             this.bottomLeftButton.BackColor = System.Drawing.Color.Black;
-            this.bottomLeftButton.Location = new System.Drawing.Point(0, 500);
+            this.bottomLeftButton.Location = new System.Drawing.Point(-2, 498);
             this.bottomLeftButton.Name = "bottomLeftButton";
             this.bottomLeftButton.Size = new System.Drawing.Size(15, 15);
             this.bottomLeftButton.TabIndex = 12;
@@ -117,7 +118,7 @@ namespace imageWpf
             // topRightButton
             // 
             this.topRightButton.BackColor = System.Drawing.Color.Black;
-            this.topRightButton.Location = new System.Drawing.Point(500, 0);
+            this.topRightButton.Location = new System.Drawing.Point(498, -2);
             this.topRightButton.Name = "topRightButton";
             this.topRightButton.Size = new System.Drawing.Size(15, 15);
             this.topRightButton.TabIndex = 11;
@@ -130,7 +131,7 @@ namespace imageWpf
             // topLeftButton
             // 
             this.topLeftButton.BackColor = System.Drawing.Color.Black;
-            this.topLeftButton.Location = new System.Drawing.Point(0, 0);
+            this.topLeftButton.Location = new System.Drawing.Point(-2, -2);
             this.topLeftButton.Name = "topLeftButton";
             this.topLeftButton.Size = new System.Drawing.Size(15, 15);
             this.topLeftButton.TabIndex = 10;
@@ -140,11 +141,22 @@ namespace imageWpf
             this.topLeftButton.MouseMove += new System.Windows.Forms.MouseEventHandler(this.corner_MouseMove);
             this.topLeftButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.corner_MouseUp);
             // 
+            // transformButton
+            // 
+            this.transformButton.Location = new System.Drawing.Point(12, 96);
+            this.transformButton.Name = "transformButton";
+            this.transformButton.Size = new System.Drawing.Size(64, 23);
+            this.transformButton.TabIndex = 19;
+            this.transformButton.Text = "Transform";
+            this.transformButton.UseVisualStyleBackColor = true;
+            this.transformButton.Click += new System.EventHandler(this.transformButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 663);
+            this.Controls.Add(this.transformButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.sourcePictureBox);
             this.Controls.Add(this.transformedPictureBox);
@@ -174,6 +186,7 @@ namespace imageWpf
         private System.Windows.Forms.Button topLeftButton;
         private System.Windows.Forms.Button saveFileButton;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button transformButton;
     }
 }
 

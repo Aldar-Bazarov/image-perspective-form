@@ -22,6 +22,8 @@ namespace imageWpf
         private WriteableBitmapWrapper _bitmap;
         private WriteableBitmapWrapper _sourceImage;
 
+        private Bitmap transformImage;
+
         public Form1()
         {
             InitializeComponent();
@@ -83,19 +85,19 @@ namespace imageWpf
 
         private void DrawPictureBoxes()
         {
-            var MaxPictureBoxHeight = this.Height - 200;
-            var MaxPictureBoxWidth = this.Width / 2 - 200;
+            var MaxPictureBoxHeight = this.Height - 400;
+            var MaxPictureBoxWidth = this.Width / 2 - 400;
 
             if (bmp.Height > bmp.Width && MaxPictureBoxHeight > (int)(MaxPictureBoxWidth * (bmp.Height / (double)bmp.Width)))
             {
                 var height = (int)(MaxPictureBoxWidth * (bmp.Height / (double)bmp.Width));
 
                 sourcePictureBox.Size = new Size(MaxPictureBoxWidth, height);
-                sourcePictureBox.Location = new Point(100, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 100);
+                sourcePictureBox.Location = new Point(200, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 200);
                 sourcePictureBox.Image = new Bitmap(MaxPictureBoxWidth, height);
 
                 transformedPictureBox.Size = new Size(MaxPictureBoxWidth, height);
-                transformedPictureBox.Location = new Point(300 + MaxPictureBoxWidth, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 100);
+                transformedPictureBox.Location = new Point(600 + MaxPictureBoxWidth, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 200);
                 transformedPictureBox.Image = new Bitmap(MaxPictureBoxWidth, height);
             }
             else if (bmp.Height > bmp.Width)
@@ -103,11 +105,11 @@ namespace imageWpf
                 var width = (int)(MaxPictureBoxHeight / (bmp.Height / (double)bmp.Width));
 
                 sourcePictureBox.Size = new Size(width, MaxPictureBoxHeight);
-                sourcePictureBox.Location = new Point((MaxPictureBoxWidth - sourcePictureBox.Width) / 2 + 100, 100);
+                sourcePictureBox.Location = new Point((MaxPictureBoxWidth - sourcePictureBox.Width) / 2 + 200, 200);
                 sourcePictureBox.Image = new Bitmap(width, MaxPictureBoxHeight);
 
                 transformedPictureBox.Size = new Size(width, MaxPictureBoxHeight);
-                transformedPictureBox.Location = new Point(MaxPictureBoxWidth + (MaxPictureBoxWidth - sourcePictureBox.Width) / 2 + 300, 100);
+                transformedPictureBox.Location = new Point(MaxPictureBoxWidth + (MaxPictureBoxWidth - sourcePictureBox.Width) / 2 + 600, 200);
                 transformedPictureBox.Image = new Bitmap(width, MaxPictureBoxHeight);
             }
             else
@@ -115,11 +117,11 @@ namespace imageWpf
                 var height = (int)(MaxPictureBoxWidth * (bmp.Height / (double)bmp.Width));
 
                 sourcePictureBox.Size = new Size(MaxPictureBoxWidth, height);
-                sourcePictureBox.Location = new Point(100, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 100);
+                sourcePictureBox.Location = new Point(200, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 200);
                 sourcePictureBox.Image = new Bitmap(MaxPictureBoxWidth, height);
 
                 transformedPictureBox.Size = new Size(MaxPictureBoxWidth, height);
-                transformedPictureBox.Location = new Point(300 + MaxPictureBoxWidth, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 100);
+                transformedPictureBox.Location = new Point(600 + MaxPictureBoxWidth, (MaxPictureBoxHeight - sourcePictureBox.Height) / 2 + 200);
                 transformedPictureBox.Image = new Bitmap(MaxPictureBoxWidth, height);
             }
 
@@ -182,18 +184,19 @@ namespace imageWpf
                     {
                         using (var fs = (FileStream)saveFileDialog.OpenFile())
                         {
+                            //transformImage.Dispose();
                             switch (saveFileDialog.FilterIndex)
                             {
                                 case 1:
-                                    transformedPictureBox.Image.Save(fs, ImageFormat.Jpeg);
+                                    transformImage.Save(fs, ImageFormat.Jpeg);
                                     break;
 
                                 case 2:
-                                    transformedPictureBox.Image.Save(fs, ImageFormat.Bmp);
+                                    transformImage.Save(fs, ImageFormat.Bmp);
                                     break;
 
                                 case 3:
-                                    transformedPictureBox.Image.Save(fs, ImageFormat.Png);
+                                    transformImage.Save(fs, ImageFormat.Png);
                                     break;
                             }
                         }
@@ -229,7 +232,7 @@ namespace imageWpf
 
                 image = BitmapFromWriteableBitmap(_bitmap.Bitmap);
 
-                DrawTransformedImages(image);
+                DrawTransformedImages(transformImage);
             }
         }
 
@@ -251,44 +254,107 @@ namespace imageWpf
         /// </summary>
         private void UpdateImage()
         {
-            var t1 = new Float2(-(topLeftButton.Location.X - sourcePictureBox.Location.X + topLeftButton.Width),
-                                -(topLeftButton.Location.Y - sourcePictureBox.Location.Y + topLeftButton.Width));
+            #region
+            //var t1 = new Float2(-(topLeftButton.Location.X - sourcePictureBox.Location.X + topLeftButton.Width),
+            //                    -(topLeftButton.Location.Y - sourcePictureBox.Location.Y + topLeftButton.Width));
 
-            var cursorPosition = new Float2((topRightButton.Location.X - sourcePictureBox.Location.X),
-                                (topRightButton.Location.Y - sourcePictureBox.Location.Y + topRightButton.Width));
-            var diff = new Float2(sourcePictureBox.Width - cursorPosition.X, cursorPosition.Y);
-            var t2 = new Float2(sourcePictureBox.Width + diff.X, -diff.Y);
+            //var cursorPosition = new Float2((topRightButton.Location.X - sourcePictureBox.Location.X),
+            //                    (topRightButton.Location.Y - sourcePictureBox.Location.Y + topRightButton.Width));
+            //var diff = new Float2(sourcePictureBox.Width - cursorPosition.X, cursorPosition.Y);
+            //var t2 = new Float2(sourcePictureBox.Width + diff.X, -diff.Y);
 
-            cursorPosition = new Float2((bottomLeftButton.Location.X - sourcePictureBox.Location.X + bottomLeftButton.Width),
-                                (bottomLeftButton.Location.Y - sourcePictureBox.Location.Y));
-            diff = new Float2(cursorPosition.X, sourcePictureBox.Height - cursorPosition.Y);
-            var t3 = new Float2(-diff.X, sourcePictureBox.Height + diff.Y);
+            //cursorPosition = new Float2((bottomLeftButton.Location.X - sourcePictureBox.Location.X + bottomLeftButton.Width),
+            //                    (bottomLeftButton.Location.Y - sourcePictureBox.Location.Y));
+            //diff = new Float2(cursorPosition.X, sourcePictureBox.Height - cursorPosition.Y);
+            //var t3 = new Float2(-diff.X, sourcePictureBox.Height + diff.Y);
 
-            cursorPosition = new Float2((bottomRightButton.Location.X - sourcePictureBox.Location.X),
-                                (bottomRightButton.Location.Y - sourcePictureBox.Location.Y));
-            diff = new Float2(cursorPosition.X - sourcePictureBox.Width, cursorPosition.Y - sourcePictureBox.Height);
-            var t4 = new Float2((cursorPosition.X - diff.X * 2),
-                                (cursorPosition.Y - diff.Y * 2));
+            //cursorPosition = new Float2((bottomRightButton.Location.X - sourcePictureBox.Location.X),
+            //                    (bottomRightButton.Location.Y - sourcePictureBox.Location.Y));
+            //diff = new Float2(cursorPosition.X - sourcePictureBox.Width, cursorPosition.Y - sourcePictureBox.Height);
+            //var t4 = new Float2((cursorPosition.X - diff.X * 2),
+            //                    (cursorPosition.Y - diff.Y * 2));
+            #endregion
+            var btmWidth = topLeftButton.Width;
+            var t1 = new Float2(topLeftButton.Location.X - sourcePictureBox.Location.X + btmWidth, topLeftButton.Location.Y - sourcePictureBox.Location.Y + btmWidth);
+            var t2 = new Float2(topRightButton.Location.X - sourcePictureBox.Location.X, topRightButton.Location.Y - sourcePictureBox.Location.Y + btmWidth);
+            var t3 = new Float2(bottomLeftButton.Location.X - sourcePictureBox.Location.X + btmWidth, bottomLeftButton.Location.Y - sourcePictureBox.Location.Y);
+            var t4 = new Float2(bottomRightButton.Location.X - sourcePictureBox.Location.X, bottomRightButton.Location.Y - sourcePictureBox.Location.Y);
 
-            var transform = Float3x3.Perspective(0, 0, _sourceImage.Width, _sourceImage.Height, t1, t2, t3, t4);
+            transformImage = CutImage(t1, t2, t3, t4);
 
-            transform = transform.Invert();
+            _sourceImage = new WriteableBitmapWrapper(transformImage);
 
-            for (var i = 0; i < 1; i++)
+            //var diffTL = new Float2(t1.X, t1.Y);
+            //var diffTR = new Float2(sourcePictureBox.Width - t2.X, t2.Y);
+            //var diffBl = new Float2(t3.X, sourcePictureBox.Height - t3.Y);
+            //var diffBR = new Float2(sourcePictureBox.Width - t4.X, sourcePictureBox.Height - t4.Y);
+
+            //var transform = Float3x3.Perspective(0, 0, _sourceImage.Width, _sourceImage.Height, t1, t2, t3, t4);
+
+            //transform = transform.Invert();
+
+            //for (var i = 0; i < 1; i++)
+            //{
+            //    using (_bitmap.Edit())
+            //    {
+            //        for (var x = 0; x < _sourceImage.Width; x++)
+            //        {
+            //            for (var y = 0; y < _sourceImage.Height; y++)
+            //            {
+            //                var tileCoord = transform.TransformPoint(new Float2(x, y));
+            //                var c = _sourceImage.GetPixelOrDefault(tileCoord);
+            //                _bitmap.SetPixel(x, y, c);
+            //            }
+            //        }
+            //    }
+            //}
+        }
+
+        private double FindTriangleSquare(Float2 p1, Float2 p2, Float2 p3)
+        {   
+            var p1p2 = Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            var p1p3 = Math.Sqrt(Math.Pow(p1.X - p3.X, 2) + Math.Pow(p1.Y - p3.Y, 2));
+            var p2p3 = Math.Sqrt(Math.Pow(p2.X - p3.X, 2) + Math.Pow(p2.Y - p3.Y, 2));
+
+            var halfPerimeter = (p1p2 + p1p3 + p2p3) / 2;
+
+            var triangleSquare = Math.Sqrt(
+                halfPerimeter * (halfPerimeter - p1p2) * (halfPerimeter - p1p3) * (halfPerimeter - p2p3));
+
+            return triangleSquare;
+        }
+
+        /// Обрезать изображение
+        private Bitmap CutImage(Float2 TL, Float2 TR, Float2 BL, Float2 BR)
+        {
+            var outBmp = new Bitmap(sourcePictureBox.Width, sourcePictureBox.Image.Height);
+
+            var firstBigTriangle = FindTriangleSquare(TL, TR, BL);
+
+            var secondBigTriangle = FindTriangleSquare(TR, BL, BR);
+
+            var neededQuadrilateralSquare = Math.Round(firstBigTriangle + secondBigTriangle);
+
+            for (int x = 0; x < sourcePictureBox.Image.Width; x++)
             {
-                using (_bitmap.Edit())
+                for (int y = 0; y < sourcePictureBox.Image.Height; y++)
                 {
-                    for (var x = 0; x < _sourceImage.Width; x++)
+                    var currentPoint = new Float2(x, y);
+                    var firstSmallTriangle = FindTriangleSquare(TL, TR, currentPoint);
+                    var secondSmallTriangle = FindTriangleSquare(TL, BL, currentPoint);
+                    var thirdSmallTriangle = FindTriangleSquare(BR, TR, currentPoint);
+                    var fourthSmallTriangle = FindTriangleSquare(BR, BL, currentPoint);
+                    var currentQuadrilateralSquare = Math.Round(firstSmallTriangle + secondSmallTriangle + thirdSmallTriangle + fourthSmallTriangle);
+                    if (neededQuadrilateralSquare >= currentQuadrilateralSquare - 5 
+                        && neededQuadrilateralSquare <= currentQuadrilateralSquare + 5)
                     {
-                        for (var y = 0; y < _sourceImage.Height; y++)
-                        {
-                            var tileCoord = transform.TransformPoint(new Float2(x, y));
-                            var c = _sourceImage.GetPixelOrDefault(tileCoord);
-                            _bitmap.SetPixel(x, y, c);
-                        }
+                        var bmp = (Bitmap)(sourcePictureBox.Image);
+                        outBmp.SetPixel(x, y, bmp.GetPixel(x, y));
                     }
                 }
             }
+
+            return outBmp;
         }
 
         /// <summary>
@@ -305,6 +371,46 @@ namespace imageWpf
                 bmp = new Bitmap(outStream);
             }
             return bmp;
+        }
+
+        private void transformButton_Click(object sender, EventArgs e)
+        {
+            //var t1 = new Float2(0, 0);
+            //var t2 = new Float2(sourcePictureBox.Width, 0);
+            //var t3 = new Float2(0, sourcePictureBox.Height - 100);
+            //var t4 = new Float2(sourcePictureBox.Width, sourcePictureBox.Height - 100);
+
+            //var transform = Float3x3.Perspective(0, 0, _sourceImage.Width, _sourceImage.Height, t1, t2, t3, t4);
+
+            //transform = transform.Invert();
+
+            //for (var i = 0; i < 1; i++)
+            //{
+            //    using (_bitmap.Edit())
+            //    {
+            //        for (var x = 0; x < _sourceImage.Width; x++)
+            //        {
+            //            for (var y = 0; y < _sourceImage.Height; y++)
+            //            {
+            //                var tileCoord = transform.TransformPoint(new Float2(x, y));
+            //                var c = _sourceImage.GetPixelOrDefault(tileCoord);
+            //                _bitmap.SetPixel(x, y, c);
+            //            }
+            //        }
+            //    }
+            //}
+
+            //image = BitmapFromWriteableBitmap(_bitmap.Bitmap);
+
+            //DrawTransformedImages(transformImage);
+
+            var g = CreateGraphics();
+            g.Clear(Color.White);
+            g.DrawImage(transformImage, new Point[] {
+                new Point(100, 100),
+                new Point(sourcePictureBox.Width - 300, -200),
+                new Point(-200, sourcePictureBox.Height - 300)
+            });
         }
     }
 }
