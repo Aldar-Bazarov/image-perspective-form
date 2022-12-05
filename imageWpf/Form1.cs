@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
 
-namespace imageWpf
+namespace ImagePerspective
 {
     public partial class Form1 : Form
     {
@@ -40,18 +39,6 @@ namespace imageWpf
             fileName = @"C:\Users\Bazarov\Desktop\images\HIMq1Bt47rQ.jpg";
 
             bmp = new Bitmap(fileName);
-
-
-            //List<IntPoint> corners = new List<IntPoint>();
-
-            //corners.Add(new IntPoint(x1, y1));
-            //corners.Add(new IntPoint(x2, y2));
-            //corners.Add(new IntPoint(x3, y3));
-            //corners.Add(new IntPoint(x4, y4));
-
-            //QuadrilateralTransformation filter = new QuadrilateralTransformationBilinear(corners, NewWidth, NewHeight);
-            //Bitmap newImage = filter.Apply(image);
-
 
             DrawPictureBoxes();
             DrawButtons();
@@ -375,42 +362,18 @@ namespace imageWpf
 
         private void transformButton_Click(object sender, EventArgs e)
         {
-            //var t1 = new Float2(0, 0);
-            //var t2 = new Float2(sourcePictureBox.Width, 0);
-            //var t3 = new Float2(0, sourcePictureBox.Height - 100);
-            //var t4 = new Float2(sourcePictureBox.Width, sourcePictureBox.Height - 100);
+            var corners = new List<IntPoint>
+            {
+                new IntPoint(topLeftButton.Location.X - sourcePictureBox.Location.X, topLeftButton.Location.Y - sourcePictureBox.Location.Y),
+                new IntPoint(topRightButton.Location.X - sourcePictureBox.Location.X, topRightButton.Location.Y - sourcePictureBox.Location.Y),
+                new IntPoint(bottomRightButton.Location.X - sourcePictureBox.Location.X, bottomRightButton.Location.Y - sourcePictureBox.Location.Y),
+                new IntPoint(bottomLeftButton.Location.X - sourcePictureBox.Location.X, bottomLeftButton.Location.Y - sourcePictureBox.Location.Y)
+            };
 
-            //var transform = Float3x3.Perspective(0, 0, _sourceImage.Width, _sourceImage.Height, t1, t2, t3, t4);
+            var filter = new QuadrilateralTransformation(corners, sourcePictureBox.Width, sourcePictureBox.Height); // rect = your target rectangle size
+            Bitmap result = filter.Apply((Bitmap)sourcePictureBox.Image); // voila!
 
-            //transform = transform.Invert();
-
-            //for (var i = 0; i < 1; i++)
-            //{
-            //    using (_bitmap.Edit())
-            //    {
-            //        for (var x = 0; x < _sourceImage.Width; x++)
-            //        {
-            //            for (var y = 0; y < _sourceImage.Height; y++)
-            //            {
-            //                var tileCoord = transform.TransformPoint(new Float2(x, y));
-            //                var c = _sourceImage.GetPixelOrDefault(tileCoord);
-            //                _bitmap.SetPixel(x, y, c);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //image = BitmapFromWriteableBitmap(_bitmap.Bitmap);
-
-            //DrawTransformedImages(transformImage);
-
-            var g = CreateGraphics();
-            g.Clear(Color.White);
-            g.DrawImage(transformImage, new Point[] {
-                new Point(100, 100),
-                new Point(sourcePictureBox.Width - 300, -200),
-                new Point(-200, sourcePictureBox.Height - 300)
-            });
+            transformedPictureBox.Image = result;
         }
     }
 }

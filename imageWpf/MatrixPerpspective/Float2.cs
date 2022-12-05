@@ -1,4 +1,4 @@
-﻿namespace imageWpf
+﻿namespace ImagePerspective
 {
     public struct Float2
     {

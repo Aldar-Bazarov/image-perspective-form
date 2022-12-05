@@ -1,5 +1,5 @@
 ﻿
-namespace imageWpf
+namespace ImagePerspective
 {
     partial class Form1
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace imageWpf
+namespace ImagePerspective
 {
     public class LambdaDisposable : IDisposable
     {
