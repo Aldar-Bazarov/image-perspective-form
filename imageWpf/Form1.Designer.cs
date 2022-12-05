@@ -34,11 +34,8 @@ namespace ImagePerspective
             this.openFileButton = new System.Windows.Forms.Button();
             this.saveFileButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
-            this.bottomRightButton = new System.Windows.Forms.Button();
-            this.bottomLeftButton = new System.Windows.Forms.Button();
-            this.topRightButton = new System.Windows.Forms.Button();
-            this.topLeftButton = new System.Windows.Forms.Button();
             this.transformButton = new System.Windows.Forms.Button();
+            this.resetButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.transformedPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sourcePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -89,58 +86,6 @@ namespace ImagePerspective
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.closeButton_MouseClick);
             // 
-            // bottomRightButton
-            // 
-            this.bottomRightButton.BackColor = System.Drawing.Color.Black;
-            this.bottomRightButton.Location = new System.Drawing.Point(498, 498);
-            this.bottomRightButton.Name = "bottomRightButton";
-            this.bottomRightButton.Size = new System.Drawing.Size(15, 15);
-            this.bottomRightButton.TabIndex = 13;
-            this.bottomRightButton.UseVisualStyleBackColor = false;
-            this.bottomRightButton.Visible = false;
-            this.bottomRightButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.corner_MouseDown);
-            this.bottomRightButton.MouseMove += new System.Windows.Forms.MouseEventHandler(this.corner_MouseMove);
-            this.bottomRightButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.corner_MouseUp);
-            // 
-            // bottomLeftButton
-            // 
-            this.bottomLeftButton.BackColor = System.Drawing.Color.Black;
-            this.bottomLeftButton.Location = new System.Drawing.Point(-2, 498);
-            this.bottomLeftButton.Name = "bottomLeftButton";
-            this.bottomLeftButton.Size = new System.Drawing.Size(15, 15);
-            this.bottomLeftButton.TabIndex = 12;
-            this.bottomLeftButton.UseVisualStyleBackColor = false;
-            this.bottomLeftButton.Visible = false;
-            this.bottomLeftButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.corner_MouseDown);
-            this.bottomLeftButton.MouseMove += new System.Windows.Forms.MouseEventHandler(this.corner_MouseMove);
-            this.bottomLeftButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.corner_MouseUp);
-            // 
-            // topRightButton
-            // 
-            this.topRightButton.BackColor = System.Drawing.Color.Black;
-            this.topRightButton.Location = new System.Drawing.Point(498, -2);
-            this.topRightButton.Name = "topRightButton";
-            this.topRightButton.Size = new System.Drawing.Size(15, 15);
-            this.topRightButton.TabIndex = 11;
-            this.topRightButton.UseVisualStyleBackColor = false;
-            this.topRightButton.Visible = false;
-            this.topRightButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.corner_MouseDown);
-            this.topRightButton.MouseMove += new System.Windows.Forms.MouseEventHandler(this.corner_MouseMove);
-            this.topRightButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.corner_MouseUp);
-            // 
-            // topLeftButton
-            // 
-            this.topLeftButton.BackColor = System.Drawing.Color.Black;
-            this.topLeftButton.Location = new System.Drawing.Point(-2, -2);
-            this.topLeftButton.Name = "topLeftButton";
-            this.topLeftButton.Size = new System.Drawing.Size(15, 15);
-            this.topLeftButton.TabIndex = 10;
-            this.topLeftButton.UseVisualStyleBackColor = false;
-            this.topLeftButton.Visible = false;
-            this.topLeftButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.corner_MouseDown);
-            this.topLeftButton.MouseMove += new System.Windows.Forms.MouseEventHandler(this.corner_MouseMove);
-            this.topLeftButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.corner_MouseUp);
-            // 
             // transformButton
             // 
             this.transformButton.Location = new System.Drawing.Point(12, 96);
@@ -151,24 +96,30 @@ namespace ImagePerspective
             this.transformButton.UseVisualStyleBackColor = true;
             this.transformButton.Click += new System.EventHandler(this.transformButton_Click);
             // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(12, 125);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(64, 23);
+            this.resetButton.TabIndex = 20;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.reset_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 663);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.transformButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.sourcePictureBox);
             this.Controls.Add(this.transformedPictureBox);
             this.Controls.Add(this.saveFileButton);
             this.Controls.Add(this.openFileButton);
-            this.Controls.Add(this.bottomRightButton);
-            this.Controls.Add(this.bottomLeftButton);
-            this.Controls.Add(this.topRightButton);
-            this.Controls.Add(this.topLeftButton);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.transformedPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sourcePictureBox)).EndInit();
             this.ResumeLayout(false);
@@ -180,13 +131,10 @@ namespace ImagePerspective
         private System.Windows.Forms.PictureBox transformedPictureBox;
         private System.Windows.Forms.PictureBox sourcePictureBox;
         private System.Windows.Forms.Button openFileButton;
-        private System.Windows.Forms.Button bottomRightButton;
-        private System.Windows.Forms.Button bottomLeftButton;
-        private System.Windows.Forms.Button topRightButton;
-        private System.Windows.Forms.Button topLeftButton;
         private System.Windows.Forms.Button saveFileButton;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Button transformButton;
+        private System.Windows.Forms.Button resetButton;
     }
 }
 

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1BB4F169-563A-4A58-BA2D-51B57D6F01BA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>imageWpf</RootNamespace>
-    <AssemblyName>imageWpf</AssemblyName>
+    <RootNamespace>ImagePerspective</RootNamespace>
+    <AssemblyName>ImagePerspective</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -55,6 +55,7 @@
     <Compile Include="AforgePerspective\BaseTransformationFilter.cs" />
     <Compile Include="AforgePerspective\CustomRGB.cs" />
     <Compile Include="AforgePerspective\DoublePoint.cs" />
+    <Compile Include="PerspectiveControl.cs" />
     <Compile Include="MatrixPerpspective\Extensions.cs" />
     <Compile Include="MatrixPerpspective\Float2.cs" />
     <Compile Include="MatrixPerpspective\Float3x3.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
